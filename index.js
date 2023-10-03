@@ -12,7 +12,7 @@ const getIndividualCharacter = (charItem) => {
   voteCount.textContent = charItem.votes;
 };
 // Fetch 
-fetch('http://localhost:4000/characters')
+fetch('http://localhost:3000/characters')
   .then((response) => response.json())
   .then((data) => {
     getIndividualCharacter(data[0]); // Display the first character by default
