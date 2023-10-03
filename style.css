@@ -1,5 +1,6 @@
+/* Your existing CSS */
 html {
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 html, body {
@@ -7,20 +8,20 @@ html, body {
   padding: 0;
 }
 
-.logo{
+.logo {
   text-align: center;
-  background-color: rgb(49, 109, 179);
+  background-color: red;
   color: white;
   padding: 0.5em;
 }
 
 #character-bar {
   height: 15vh;
-  background: rgb(49, 109, 179);
+  background: red;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding-bottom: 3vh;
+  padding-bottom: 5vh;
 }
 
 #character-bar span {
@@ -35,27 +36,36 @@ html, body {
   border: 1px solid white;
 }
 
-.characterInfo{
+.characterInfo {
   height: 550px;
   padding: 30px;
   font-size: 24px;
-  border: dotted;
   text-align: center;
 }
 
-input[type="submit"], button {
-  background-color: rgb(49, 109, 179);
+input[type="submit"],
+button {
+  background-color: red;
   color: white;
   font-size: 18px;
   border-radius: 6px;
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 input[type="text"] {
   font-size: 3vh;
 }
 
-#image{
+#image {
   width: 300px;
   height: 300px;
+}
+
+.votes-label {
+  float: left;
+  margin-right: 10px; 
+}
+
+.votes-count {
+  float: right;
 }

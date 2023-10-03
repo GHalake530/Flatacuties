@@ -1,57 +1,53 @@
-// Function to load character data from the JSON file
-function loadCharactersFromJSON() {
-    fetch('db.json') // Assuming db.json is in the same directory as your HTML file
-      .then((response) => response.json())
-      .then((data) => {
-        const characters = data.characters;
-        const characterBar = document.getElementById('character-bar');
-  
-        // Loop through the character data and add each character's name to the character bar
-        characters.forEach((character) => {
-          const characterName = document.createElement('span');
-          characterName.textContent = character.name;
-          characterName.classList.add('character-name');
-  
-          // Add a click event listener to each character name for displaying details
-          characterName.addEventListener('click', () => {
-            displayCharacterDetails(character);
-          });
-  
-          characterBar.appendChild(characterName);
-        });
-      })
-      .catch((error) => {
-        console.error('Error loading character data from JSON:', error);
+const characterBar = document.getElementById('character-bar');
+const characterName = document.getElementById('name');
+const characterImg = document.getElementById('image');
+const voteCount = document.getElementById('vote-count');
+const votesForm = document.getElementById('votes-form');
+const resetButton = document.getElementById('reset-btn'); // Add this line to select the reset button
+// Update char info
+const getIndividualCharacter = (charItem) => {
+  characterName.textContent = charItem.name;
+  characterImg.src = charItem.image;
+  characterImg.alt = charItem.name;
+  voteCount.textContent = charItem.votes;
+};
+// Fetch 
+fetch('http://localhost:4000/characters')
+  .then((response) => response.json())
+  .then((data) => {
+    getIndividualCharacter(data[0]); // Display the first character by default
+
+    // Loop 
+    data.forEach((charItem) => {
+      const charName = document.createElement('span');
+      charName.textContent = charItem.name;
+      charName.className = 'character-name';
+
+      // Add a click event listener 
+      charName.addEventListener('click', () => {
+        getIndividualCharacter(charItem);
       });
-  }
-  // Function to display character details in div#detailed-info
-  function displayCharacterDetails(character) {
-    const detailedInfo = document.getElementById('detailed-info');
-    const nameElement = document.getElementById('name');
-    const imageElement = document.getElementById('image');
-    const voteCountElement = document.getElementById('vote-count');
-    const votesForm = document.getElementById('votes-form');
-  
-    // Update the character details in the div#detailed-info
-    nameElement.textContent = character.name;
-    imageElement.src = character.image;
-    imageElement.alt = character.name;
-    voteCountElement.textContent = character.votes;
-  
-    // Add a submit event listener to the votes form
-    votesForm.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const votesInput = document.getElementById('votes');
-      const votes = parseInt(votesInput.value);
-  
-      // Update the vote count for the character
-      character.votes += votes;
-      voteCountElement.textContent = character.votes;
-  
-      // Clear the input field
-      votesInput.value = '';
+
+      characterBar.appendChild(charName);
     });
+  });
+// Add a submit event listener to the votes form
+votesForm.addEventListener('submit', (event) => {
+  event.preventDefault(); // Prevent the form from submitting and refreshing the page
+
+  const votesInput = document.getElementById('votes');
+  const votes = parseInt(votesInput.value, 10);
+
+  if (!isNaN(votes)) {
+    // Update the vote count in the character details
+    const currentVotes = parseInt(voteCount.textContent, 10);
+    voteCount.textContent = currentVotes + votes;
+    // Clear the votes input field
+    votesInput.value = '';
   }
-  // Call the loadCharactersFromJSON function to load character names from the JSON file
-  loadCharactersFromJSON();
-  
+});
+// Add a click event listener to the reset button
+resetButton.addEventListener('click', () => {
+  // Reset the vote count to zero
+  voteCount.textContent = '0';
+});
